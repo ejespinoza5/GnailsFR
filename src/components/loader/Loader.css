@@ -1,0 +1,125 @@
+/* Animación original de logo/logos sin fondo/Loader G.html */
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+.loader__svg {
+  width: var(--loader-ancho, 64px);
+  aspect-ratio: 450 / 920;
+  overflow: visible;
+}
+
+.loader__gota {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: loader-goteo 1.8s cubic-bezier(0.55, 0, 0.2, 1) infinite;
+}
+
+.loader__onda {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: loader-onda 1.8s cubic-bezier(0.3, 0, 0.4, 1) infinite;
+}
+
+.loader__mensaje {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oro-texto);
+}
+
+/* Variantes */
+.loader--pantalla {
+  --loader-ancho: 92px;
+  min-height: 100dvh;
+  background: var(--crema);
+}
+
+.loader--bloque {
+  --loader-ancho: 56px;
+  min-height: 260px;
+  padding: 2rem 1rem;
+}
+
+.loader--superpuesto {
+  --loader-ancho: 84px;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(250, 247, 242, 0.86);
+  backdrop-filter: blur(3px);
+  /* Si la acción termina rápido, el velo ni llega a verse (evita parpadeos). */
+  animation: loader-aparecer 0.25s ease-out 0.18s both;
+}
+
+@keyframes loader-aparecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes loader-goteo {
+  0% {
+    transform: translateY(0) scaleY(0.82);
+    opacity: 1;
+  }
+  12% {
+    transform: translateY(2px) scaleY(1.22);
+    opacity: 1;
+  }
+  26% {
+    transform: translateY(0) scaleY(0.88);
+    opacity: 1;
+  }
+  65% {
+    transform: translateY(150px) scaleY(1.35);
+    opacity: 1;
+  }
+  82%,
+  100% {
+    transform: translateY(205px) scaleY(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes loader-onda {
+  0%,
+  68% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  74% {
+    opacity: 0.55;
+    transform: scale(0.4);
+  }
+  92%,
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+/* El loader indica que algo está pasando: la gota se anima aunque el sistema
+   pida movimiento reducido (Windows con "Efectos de animación" apagados).
+   Se sobrescribe la regla global que acorta todas las animaciones. */
+@media (prefers-reduced-motion: reduce) {
+  .loader .loader__gota,
+  .loader .loader__onda {
+    animation-duration: 1.8s !important;
+    animation-iteration-count: infinite !important;
+  }
+  .loader--superpuesto {
+    animation-duration: 0.25s !important;
+  }
+}

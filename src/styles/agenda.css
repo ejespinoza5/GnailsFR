@@ -1,0 +1,540 @@
+/* =====================================================================
+   AGENDA DE LA ADMINISTRADORA · VISTAS DÍA / SEMANA / MES
+   ===================================================================== */
+
+/* Un color por profesional (texto con contraste AA sobre su fondo) */
+.punto--p0,
+.bloque-semana--p0 {
+  --c: #87672a;
+  --cf: #f5ecdb;
+}
+.punto--p1,
+.bloque-semana--p1 {
+  --c: #3f7a4f;
+  --cf: #e6f0e7;
+}
+.punto--p2,
+.bloque-semana--p2 {
+  --c: #7a4a6b;
+  --cf: #f2e6ee;
+}
+.punto--p3,
+.bloque-semana--p3 {
+  --c: #3e5f7a;
+  --cf: #e4ecf3;
+}
+.punto--p4,
+.bloque-semana--p4 {
+  --c: #a14f2b;
+  --cf: #f8e8df;
+}
+.punto--p5,
+.bloque-semana--p5 {
+  --c: #2f6f6a;
+  --cf: #e1efed;
+}
+
+.punto {
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+.agenda__controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+}
+.segmentos--compacto {
+  margin: 0;
+}
+.segmentos--compacto .segmento {
+  height: 34px;
+  padding: 0 0.95rem;
+  font-size: 0.85rem;
+}
+
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.1rem;
+  margin: -0.75rem 0 1.25rem;
+}
+.leyenda__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+}
+.control--filtro {
+  width: auto;
+  min-height: 38px;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+  font-size: 0.88rem;
+}
+
+/* ---------- Semana */
+
+.semana-agenda {
+  overflow-x: auto;
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  background: var(--blanco);
+}
+.semana-agenda__rejilla {
+  display: grid;
+  grid-template-columns: 4.6rem repeat(7, minmax(84px, 1fr));
+  grid-template-rows: auto var(--alto);
+  min-width: calc(4.6rem + 7 * 84px);
+  padding-bottom: 1rem;
+}
+.semana-agenda__esquina {
+  border-bottom: 1px solid var(--oro-linea);
+}
+.semana-agenda__dia {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.05rem;
+  padding: 1.05rem 0.25rem 0.7rem;
+  border: 0;
+  border-bottom: 1px solid var(--oro-linea);
+  border-left: 1px solid var(--gris-fondo);
+  background: transparent;
+  color: var(--tinta);
+  font: inherit;
+  cursor: pointer;
+}
+.semana-agenda__dia:hover {
+  background: #fdfaf4;
+}
+.semana-agenda__nombre {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+.semana-agenda__numero {
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.05;
+}
+.semana-agenda__cuenta {
+  font-size: 0.72rem;
+  color: var(--tinta-suave);
+}
+.semana-agenda__dia--hoy .semana-agenda__numero {
+  color: var(--oro-texto);
+}
+/* Hoy: la gota dorada del logo sobre la fecha */
+.semana-agenda__dia--hoy::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  width: 8px;
+  height: 11px;
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: linear-gradient(#c9a35a, #8a6a2e);
+  clip-path: polygon(50% 0, 100% 62%, 100% 100%, 0 100%, 0 62%);
+}
+
+.semana-agenda__horas {
+  position: relative;
+}
+.semana-agenda__horas span {
+  position: absolute;
+  right: 0.6rem;
+  transform: translateY(-0.55em);
+  font-size: 0.72rem;
+  color: var(--tinta-suave);
+  white-space: nowrap;
+}
+.semana-agenda__horas span:first-child {
+  transform: none;
+}
+
+.semana-agenda__columna {
+  position: relative;
+  border-left: 1px solid var(--gris-fondo);
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--oro-linea) 0 1px,
+    transparent 1px calc(var(--hora) / 2),
+    #f3eee7 calc(var(--hora) / 2) calc(var(--hora) / 2 + 1px),
+    transparent calc(var(--hora) / 2 + 1px) var(--hora)
+  );
+}
+.semana-agenda__columna--cerrada {
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 8px, rgba(133, 123, 114, 0.08) 8px 9px),
+    repeating-linear-gradient(to bottom, var(--oro-linea) 0 1px, transparent 1px var(--hora)),
+    var(--crema);
+}
+.semana-agenda__cerrado {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gris);
+}
+
+.bloque-semana {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  align-content: start;
+  gap: 0.05rem;
+  padding: 0.25rem 0.4rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
+  border-radius: 8px;
+  background: var(--cf);
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+.bloque-semana:hover {
+  box-shadow: var(--sombra);
+}
+.bloque-semana--activa {
+  outline: 2px solid var(--c);
+  outline-offset: 1px;
+}
+.bloque-semana__hora {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--c);
+}
+.bloque-semana__cliente {
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bloque-semana--no_asistio {
+  opacity: 0.55;
+  background: repeating-linear-gradient(-45deg, var(--cf) 0 6px, var(--blanco) 6px 9px);
+}
+
+.linea-ahora--semana {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0;
+}
+
+.lista-semana {
+  display: grid;
+  gap: 1.1rem;
+}
+.lista-semana__titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0 0 0.4rem;
+  border: 0;
+  border-bottom: 1px solid var(--oro-linea);
+  background: none;
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.lista-semana__titulo small {
+  font-weight: 400;
+  color: var(--tinta-suave);
+}
+.lista-semana__titulo--hoy span {
+  color: var(--oro-texto);
+}
+
+/* ---------- Mes */
+
+.mes {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  background: var(--blanco);
+  overflow: hidden;
+}
+.mes__encabezado {
+  padding: 0.65rem 0.5rem;
+  border-bottom: 1px solid var(--oro-linea);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--tinta-suave);
+}
+.mes__dia {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.3rem;
+  min-height: 116px;
+  min-width: 0;
+  padding: 0.45rem 0.5rem 0.5rem;
+  border: 0;
+  border-right: 1px solid var(--gris-fondo);
+  border-bottom: 1px solid var(--gris-fondo);
+  background: var(--blanco);
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.mes__dia:nth-child(7n) {
+  border-right: 0;
+}
+.mes__dia:hover {
+  background: #fdfaf4;
+}
+.mes__numero {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1;
+}
+.mes__dia--fuera {
+  background: #fcfaf7;
+}
+.mes__dia--fuera .mes__numero,
+.mes__dia--fuera .mes__cita {
+  opacity: 0.45;
+}
+.mes__dia--pasado .mes__numero {
+  color: var(--tinta-suave);
+}
+.mes__dia--cerrado {
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 8px, rgba(133, 123, 114, 0.07) 8px 9px),
+    var(--crema);
+}
+.mes__dia--hoy .mes__numero {
+  display: inline-grid;
+  place-items: center;
+  align-self: flex-start;
+  width: 32px;
+  height: 32px;
+  margin: -0.2rem 0 0 -0.25rem;
+  border-radius: 50%;
+  background: var(--espresso);
+  color: var(--oro-claro);
+}
+.mes__cerrado {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--gris);
+}
+.mes__citas {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.mes__cita {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mes__cita .tabular {
+  font-weight: 600;
+}
+.mes__mas {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--oro-texto);
+}
+.mes__puntos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px;
+}
+
+@media (max-width: 900px) {
+  .mes__dia {
+    min-height: 64px;
+    padding: 0.4rem 0.3rem;
+    align-items: center;
+  }
+  .mes__numero {
+    font-size: 1.05rem;
+  }
+  .mes__dia--hoy .mes__numero {
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    align-self: center;
+  }
+  .leyenda {
+    margin-top: -0.5rem;
+  }
+}
+
+/* ---------- Nueva cita (agendar desde el salón) */
+
+.nueva-cita__sin-cuenta {
+  margin-top: 0.75rem;
+  gap: 0.75rem;
+}
+.nueva-cita__sin-horas {
+  margin: 0.6rem 0 0;
+}
+.grupo-campos .segmentos--compacto {
+  display: flex;
+  margin-bottom: 0.75rem;
+}
+.grupo-campos .segmentos--compacto .segmento {
+  flex: 1;
+  justify-content: center;
+}
+.buscar-clienta {
+  display: grid;
+  gap: 0.4rem;
+}
+.buscar-clienta__lista {
+  display: grid;
+  gap: 0.15rem;
+  max-height: 240px;
+  margin: 0;
+  padding: 0.3rem;
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  background: var(--blanco);
+}
+.buscar-clienta__lista .nota-suave {
+  padding: 0.5rem 0.6rem;
+}
+.buscar-clienta__opcion {
+  display: grid;
+  gap: 0.1rem;
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.buscar-clienta__opcion:hover,
+.buscar-clienta__opcion:focus-visible {
+  background: var(--oro-velo);
+}
+.buscar-clienta__opcion small {
+  color: var(--tinta-suave);
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+.clienta-elegida {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--oro-linea);
+  border-radius: 12px;
+  background: var(--oro-velo);
+}
+.clienta-elegida svg {
+  flex: none;
+  color: var(--oro-texto);
+}
+.clienta-elegida span {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+.clienta-elegida small {
+  color: var(--tinta-suave);
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+.etiqueta--sin-cuenta {
+  margin-top: -0.4rem;
+  background: var(--gris-fondo);
+  color: var(--tinta-suave);
+}
+
+/* ---------- Acceso de las profesionales */
+
+.persona__acceso {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  margin: 0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--salvia-fondo);
+  color: var(--salvia);
+  font-size: 0.78rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.acceso-app {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1rem;
+  border: 1px solid var(--oro-linea);
+  border-radius: 14px;
+  background: #fdfaf4;
+}
+.acceso-app__estado {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.acceso-app__estado svg {
+  flex: none;
+  margin-top: 0.2rem;
+  color: var(--salvia);
+}
+.acceso-app .confirmar {
+  justify-content: flex-start;
+}
+
+.buscar-clienta .control-prefijo .control {
+  padding-left: 2.6rem;
+}
+.buscar-clienta .control-prefijo > span {
+  display: grid;
+  color: var(--oro-texto);
+}
+.acceso-app__estado span {
+  overflow-wrap: anywhere;
+}

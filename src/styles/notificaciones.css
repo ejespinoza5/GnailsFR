@@ -1,0 +1,446 @@
+/* =====================================================================
+   NOTIFICACIONES · campanita, preferencias, promociones
+   ===================================================================== */
+
+.campanita {
+  position: relative;
+}
+.campanita__boton {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(233, 223, 207, 0.18);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--espresso-texto);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.campanita__boton:hover {
+  background: rgba(233, 223, 207, 0.08);
+}
+.campanita__contador {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  display: grid;
+  place-items: center;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 0.3rem;
+  border: 2px solid var(--espresso);
+  border-radius: 999px;
+  background: var(--oro-claro);
+  color: var(--espresso);
+  font-size: 0.66rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.barra .campanita {
+  margin-left: auto;
+}
+.barra .volver-panel ~ .campanita,
+.barra .campanita + .menu-usuario {
+  margin-left: 0;
+}
+
+/* En el riel del panel: fila como las secciones */
+.campanita--riel .campanita__boton {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  height: 44px;
+  padding: 0 0.8rem;
+  border: 0;
+  border-radius: 12px;
+  color: rgba(233, 223, 207, 0.75);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.campanita--riel .campanita__contador {
+  position: static;
+  margin-left: auto;
+  border: 0;
+}
+.admin--encogido .campanita--riel .campanita__boton {
+  justify-content: center;
+  padding: 0;
+}
+.admin--encogido .campanita--riel .campanita__contador {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  margin: 0;
+  border: 2px solid var(--espresso);
+}
+
+.campanita__panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: -60px;
+  z-index: 70;
+  width: min(380px, calc(100vw - 24px));
+  max-height: min(70vh, 520px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  background: var(--blanco);
+  color: var(--tinta);
+  box-shadow: var(--sombra-flotante);
+  animation: aviso-entra 0.18s ease-out;
+}
+.campanita--riel .campanita__panel {
+  top: auto;
+  bottom: 0;
+  right: auto;
+  left: calc(100% + 14px);
+}
+.campanita__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem 0.7rem;
+  border-bottom: 1px solid var(--gris-fondo);
+}
+.campanita__cabecera h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.campanita__cabecera .enlace {
+  font-size: 0.8rem;
+}
+.campanita__lista {
+  margin: 0;
+  padding: 0.35rem;
+  overflow-y: auto;
+  list-style: none;
+}
+.campanita__vacia {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  padding: 2rem 1rem;
+  color: var(--tinta-suave);
+  text-align: center;
+}
+.campanita__vacia p {
+  margin: 0;
+  font-size: 0.88rem;
+}
+.aviso-item {
+  position: relative;
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.aviso-item:hover {
+  background: var(--gris-fondo);
+}
+.aviso-item--nuevo {
+  background: #fdf8ee;
+}
+.aviso-item--nuevo::after {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  right: 0.8rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--oro);
+}
+.aviso-item__icono {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--oro-velo);
+  color: var(--oro-texto);
+}
+.aviso-item__icono--cita_cancelada {
+  background: var(--terracota-fondo);
+  color: var(--terracota);
+}
+.aviso-item__icono--recordatorio {
+  background: var(--espresso);
+  color: var(--oro-claro);
+}
+.aviso-item__icono--cita_confirmada,
+.aviso-item__icono--cita_nueva {
+  background: var(--salvia-fondo);
+  color: var(--salvia);
+}
+.aviso-item__texto {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+  padding-right: 0.9rem;
+}
+.aviso-item__texto strong {
+  font-size: 0.9rem;
+}
+.aviso-item__texto span {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--tinta-suave);
+}
+.aviso-item__texto small {
+  font-size: 0.75rem;
+  color: var(--gris);
+}
+
+@media (max-width: 900px) {
+  .campanita--riel .campanita__boton {
+    width: 42px;
+    height: 42px;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid rgba(233, 223, 207, 0.18);
+    border-radius: 50%;
+  }
+  .campanita--riel .riel__texto {
+    display: none;
+  }
+  .campanita--riel .campanita__contador {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    border: 2px solid var(--espresso);
+  }
+  .campanita--riel .campanita__panel {
+    position: fixed;
+    top: 64px;
+    bottom: auto;
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+  .riel__pie {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+}
+@media (max-width: 640px) {
+  .barra .campanita__panel {
+    position: fixed;
+    top: 64px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+}
+
+/* ---------- Activar en este dispositivo */
+
+.activar-push {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--oro-linea);
+  border-radius: 16px;
+  background: #fdfaf4;
+  text-align: left;
+}
+.activar-push > svg {
+  flex: none;
+  color: var(--oro-texto);
+}
+.activar-push > div {
+  flex: 1;
+  min-width: 200px;
+}
+.activar-push strong {
+  font-size: 0.95rem;
+}
+.activar-push p {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--tinta-suave);
+}
+.activar-push p svg {
+  vertical-align: -2px;
+}
+.activar-push--activo {
+  background: var(--salvia-fondo);
+  border-color: rgba(63, 122, 79, 0.25);
+}
+.activar-push--activo > svg {
+  color: var(--salvia);
+}
+.comprobante .activar-push {
+  margin-top: 1.5rem;
+}
+.preferencias {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+/* ---------- Promociones (panel) */
+
+.notificaciones-admin {
+  max-width: 1080px;
+}
+.notificaciones-admin__cuerpo {
+  display: grid;
+  gap: 1.5rem;
+}
+.audiencia {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.4rem 0 1.25rem;
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+.audiencia svg {
+  color: var(--oro-texto);
+}
+.nueva-campana__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (min-width: 1000px) {
+  .nueva-campana__grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+}
+.nueva-campana .segmentos--compacto {
+  display: flex;
+  margin-bottom: 0.75rem;
+}
+
+/* Vista previa en la pantalla bloqueada de un celular */
+.vista-push {
+  display: grid;
+  place-items: center;
+}
+.vista-push__telefono {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 320px;
+  min-height: 300px;
+  padding: 2.25rem 0.9rem 1.5rem;
+  border-radius: 34px;
+  background:
+    radial-gradient(ellipse at 30% 10%, rgba(201, 163, 90, 0.35), transparent 60%),
+    linear-gradient(160deg, #3a2f26, #14100d);
+  box-shadow: var(--sombra-flotante);
+}
+.vista-push__hora {
+  font-size: 3rem;
+  font-weight: 300;
+  color: #f4ece0;
+  letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums;
+}
+.vista-push__aviso {
+  display: flex;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 16px;
+  background: rgba(251, 248, 243, 0.86);
+  color: var(--tinta);
+  text-align: left;
+}
+.vista-push__aviso img {
+  flex: none;
+  border-radius: 9px;
+}
+.vista-push__aviso > div {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+.vista-push__app {
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: var(--tinta-suave);
+}
+.vista-push__aviso strong {
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+.vista-push__aviso > div > span:last-child {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.lista-campanas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.campana {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--gris-fondo);
+}
+.campana:last-child {
+  border-bottom: 0;
+}
+.campana__icono {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--oro-velo);
+  color: var(--oro-texto);
+}
+.campana--programada .campana__icono {
+  background: var(--espresso);
+  color: var(--oro-claro);
+}
+.campana--cancelada {
+  opacity: 0.6;
+}
+.campana__texto {
+  display: grid;
+  gap: 0.15rem;
+  flex: 1;
+  min-width: 0;
+}
+.campana__texto span {
+  font-size: 0.86rem;
+  color: var(--tinta-suave);
+}
+.campana__texto small {
+  font-size: 0.78rem;
+  color: var(--gris);
+}

@@ -1,0 +1,401 @@
+/* =====================================================================
+   ESTRELLAS · PÁGINA WEB (admin) · OPINIONES (admin y clienta)
+   ===================================================================== */
+
+.estrellas {
+  display: inline-flex;
+  gap: 2px;
+  vertical-align: middle;
+}
+.estrellas__una {
+  position: relative;
+  display: inline-block;
+}
+.estrellas__fondo {
+  color: rgba(201, 163, 90, 0.38);
+}
+.estrellas__relleno {
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+  color: var(--oro-claro);
+}
+.estrellas__relleno svg,
+.estrellas__fondo {
+  display: block;
+}
+.estrellas__relleno svg {
+  fill: currentColor;
+}
+
+.selector-estrellas {
+  display: grid;
+  gap: 0.35rem;
+}
+.selector-estrellas__grupo {
+  display: flex;
+  gap: 0.15rem;
+}
+.selector-estrellas__boton {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #d4c3a0;
+  cursor: pointer;
+  transition:
+    color 0.12s,
+    transform 0.12s;
+}
+.selector-estrellas__boton:hover {
+  transform: scale(1.08);
+}
+.selector-estrellas__boton--on {
+  color: var(--oro-claro);
+}
+.selector-estrellas__boton--on svg {
+  fill: currentColor;
+}
+.selector-estrellas__texto {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--oro-texto);
+}
+
+/* ---------- Mi opinión (clienta) */
+
+.mi-opinion {
+  display: grid;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  padding: 1.35rem 1.4rem;
+  border: 1px solid var(--oro-linea);
+  border-radius: 20px;
+  background: var(--blanco);
+}
+.mi-opinion--form {
+  background: linear-gradient(var(--oro-velo), var(--oro-velo)) top / 100% 4px no-repeat, var(--blanco);
+}
+.mi-opinion h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.55rem;
+  font-weight: 600;
+}
+.mi-opinion__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.mi-opinion__texto {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+.mi-opinion__respuesta,
+.opinion-admin__respuesta-previa {
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  background: var(--oro-velo);
+  font-size: 0.9rem;
+}
+.mi-opinion__respuesta p {
+  margin: 0.25rem 0 0;
+}
+.mi-opinion .formulario {
+  margin-top: 0.4rem;
+}
+
+/* ---------- Página web (admin) */
+
+.pagina-web {
+  max-width: 1080px;
+}
+.editor-portada {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (min-width: 1100px) {
+  .editor-portada {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  }
+  .vista-portada {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+.vista-portada {
+  position: relative;
+  display: grid;
+  align-items: end;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 78% 30%, rgba(201, 163, 90, 0.25), transparent 55%),
+    var(--espresso);
+  color: #fbf8f3;
+  isolation: isolate;
+  box-shadow: var(--sombra);
+}
+.vista-portada img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.vista-portada__velo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(20, 16, 13, 0.5) 0%, rgba(20, 16, 13, 0.15) 35%, rgba(20, 16, 13, 0.9) 100%),
+    linear-gradient(90deg, rgba(20, 16, 13, 0.5), transparent 65%);
+}
+.vista-portada__texto {
+  display: grid;
+  justify-items: start;
+  gap: 0.5rem;
+  padding: 1.5rem;
+}
+.vista-portada__texto strong {
+  max-width: 13ch;
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1;
+}
+.vista-portada__texto span {
+  max-width: 44ch;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: rgba(251, 248, 243, 0.85);
+}
+.vista-portada__texto em {
+  margin-top: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--oro-texto);
+  font-style: normal;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.vista-portada__cargando {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 16, 13, 0.7);
+}
+.vista-portada__cargando .loader__mensaje {
+  color: var(--oro-claro);
+}
+.editor-portada .panel__acciones {
+  margin-bottom: 1rem;
+}
+
+.trabajos-admin__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.trabajos-admin__barra .seccion__texto {
+  margin: 0;
+  max-width: 60ch;
+}
+.fotos-admin {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.foto-admin {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.6rem;
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  background: var(--blanco);
+}
+.foto-admin__imagen {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--gris-fondo);
+}
+.foto-admin__imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.foto-admin--oculta .foto-admin__imagen img {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
+.foto-admin__estado {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--espresso);
+  color: var(--espresso-texto);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.foto-admin__titulo {
+  min-height: 38px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.85rem;
+}
+.foto-admin__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.foto-admin__acciones .boton-icono {
+  width: 36px;
+  height: 36px;
+}
+.boton-icono--peligro {
+  color: var(--error);
+}
+.foto-admin__acciones .confirmar {
+  flex-basis: 100%;
+  justify-content: flex-start;
+}
+
+.editor-ubicacion {
+  display: grid;
+  gap: 1.25rem;
+}
+.editor-ubicacion .seccion {
+  display: grid;
+  gap: 1rem;
+}
+.editor-ubicacion .seccion__texto {
+  margin: 0;
+}
+.metodos {
+  flex-wrap: wrap;
+  border-radius: 18px;
+}
+.fila-boton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.fila-boton .control {
+  flex: 1 1 260px;
+}
+.control[readonly] {
+  background: var(--gris-fondo);
+  color: var(--tinta-suave);
+}
+.mapa-previo {
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+  overflow: hidden;
+  border: 1px solid var(--oro-linea);
+  border-radius: 18px;
+  background: var(--crema);
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+.mapa-previo iframe {
+  width: 100%;
+  height: 320px;
+  border: 0;
+}
+
+/* ---------- Opiniones (admin) */
+
+.resumen-opiniones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  margin: 0 0 1.5rem;
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+.resumen-opiniones__numero {
+  font-family: var(--serif);
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--oro-texto);
+}
+.lista-opiniones {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.opinion-admin {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  background: var(--blanco);
+}
+.opinion-admin--oculta {
+  background: rgba(255, 255, 255, 0.55);
+}
+.opinion-admin--oculta .opinion-admin__texto {
+  color: var(--tinta-suave);
+}
+.opinion-admin__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+.opinion-admin__quien {
+  flex: 1;
+  min-width: 200px;
+  font-size: 0.88rem;
+  color: var(--tinta-suave);
+  overflow-wrap: anywhere;
+}
+.opinion-admin__quien strong {
+  color: var(--tinta);
+}
+.opinion-admin__fecha {
+  font-size: 0.8rem;
+  color: var(--tinta-suave);
+}
+.opinion-admin__texto {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+.opinion-admin__respuesta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.opinion-admin__respuesta .control {
+  flex: 1 1 320px;
+  min-height: 64px;
+}
